@@ -2,3 +2,4 @@
 /static
 *.pyc
 eclec/parameters.py
+db.sqlite3
