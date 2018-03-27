@@ -1,0 +1,23 @@
+{% for i in news %}
+    {% if i.image %}
+        <div class="col-md-3 col-sm-6">
+            <a href="{% url 'get_news' pk=i.id %}"></a>
+            <div class="cover" style="background:  url({{ i.image.url }}) 0 0 no-repeat;">
+                <div class="title">
+                    <h2>{{ i.title }}</h2>
+                    <span>{{ i.date }}</span>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-md-3 col-sm-6 no-image">
+            <a href="{% url 'get_news' pk=i.id %}"></a>
+            <div class="cover">
+                <div class="title">
+                    <h2> {{ i.title }}</h2>
+                    <span>{{ i.date }}</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

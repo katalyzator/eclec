@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <section class="vacancy-detail">
+        <div class="container">
+            <div class="row">
+                <div class="line">
+                    <h3>Полный день</h3>
+                </div>
+                <div class="content">
+                    <div class="item">
+                        <h4>базовые требования</h4>
+                        {{ vacancy.basic|safe }}
+                    </div>
+                    <div class="item">
+                        <h4>Общие условия</h4>
+                        {{ vacancy.conditions|safe }}
+                    </div>
+                    <div class="item">
+                        <h4>Отклик на вакансию</h4>
+                        <form class="form-horizontal col-md-8" method="post" action="{% url 'vacancy_feed' %}"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Имя и Фамилия:</label>
+                                <div class="col-sm-8">
+                                    <input type="hidden" name="vacancy" value="{{ vacancy.id }}">
+                                    <input type="text" class="form-control" id="inputEmail3" name="name" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">Эл. почта:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="email" class="form-control" id="inputPassword3"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <label for="exampleInputFile" class="btn-custom">
+                                        <img src="{% static 'img/vacancy/file.png' %}" alt="">
+                                        Прикрепить<br>Резюме
+                                    </label>
+                                    <input type="file" id="exampleInputFile" name="file">
+                                    <p class="help-block filename"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button type="submit" class="btn-custom"><img
+                                            src="{% static 'img/vacancy/mail.png' %}" alt="">Отправить <br> Отклик
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block custom_scripts %}
+    <script>
+        $('input[type="file"]').on('change', function (event, files, label) {
+            var file_name = this.value.replace(/\\/g, '/').replace(/.*\//, '')
+            $('.filename').text(file_name);
+        });
+    </script>
+{% endblock %}
+

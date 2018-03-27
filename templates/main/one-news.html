@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<section class="one-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="content">
+                    <span>{{ news.date }}</span>
+                    <h1>{{ news.title }}</h1>
+                    {% if news.image %}<img src="{{ news.image.url }}" alt="" class="img-responsive">{% endif %}
+                    {{ news.text|safe }}
+
+                    <div class="control">
+                        <div class="pull-left">
+                            {% if previous %}
+                            <a href="{% url 'get_news' pk=previous.id %}">Предыдущая</a>
+                            {% endif %}
+                        </div>
+                        <div class="pull-right">
+                            {% if next %}
+                            <a href="{% url 'get_news' pk=next.id %}">Следующая</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

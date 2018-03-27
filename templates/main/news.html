@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<section class="catalog-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="line">
+                    <h3>Новости</h3>
+                </div>
+                <div id="news-grid">
+                    {% for i in news %}
+                        {% if i.image %}
+                            <div class="col-md-3 col-sm-6">
+                                <a href="{% url 'get_news' pk=i.id%}"></a>
+                                <div class="cover" style="background:  url({{ i.image.url }}) 0 0 no-repeat;">
+                                    <div class="title">
+                                        <h2>{{ i.title }}</h2>
+                                        <span>{{ i.date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-3 col-sm-6 no-image">
+                                <a href="{% url 'get_news' pk=i.id%}"></a>
+                                <div class="cover">
+                                    <div class="title">
+                                        <h2> {{ i.title }}</h2>
+                                        <span>{{ i.date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="clearfix"></div>
+                <a href="{% url 'news_paginate' %}" class="see-more" data-page="1" data-page-count="{{ page_count }}">Показать больше</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

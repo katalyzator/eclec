@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <section class="gallery">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="line">
+                        <h3>Галерея</h3>
+                    </div>
+                    {#                <nav class="control-page" aria-label="...">#}
+                    {#                    <ul class="pagination pagination-sm pull-right">#}
+                    {#                        <li class="disabled prev"><a href="#" aria-label="Previous"></a></li>#}
+                    {#                        <li class="active"><a href="#">1 </a></li>#}
+                    {#                        <li class=""><a href="#">2 </a></li>#}
+                    {#                        <li class=""><a href="#">3 </a></li>#}
+                    {#                        <li class=""><a href="#">... </a></li>#}
+                    {#                        <li class=""><a href="#">7 </a></li>#}
+                    {#                        <li class="next"><a href="#" aria-label="Next"></a></li>#}
+                    {#                    </ul>#}
+                    {#                </nav>#}
+                    <div class="col-md-12">
+                        <div class="cat">
+                            <ul>
+                                <li class="{% if location == 'gallery' %}active{% endif %}"><a href="{% url 'gallery' %}">Все</a></li>
+                                <li class="{% if location == 'image' %}active{% endif %}"><a href="{% url 'image' %}">Фото</a></li>
+                                <li class="{% if location == 'video' %}active{% endif %}"><a href="{% url 'video' %}">Видео</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div id="video-gallery">
+                        {% for i in gallery %}
+                            {% if i.image %}
+                                <a class="col-md-4 col-sm-6" href="{{ i.image.url }}">
+                                    <div class="cover">
+                                        <img src="{{ i.image.url }}"/>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if i.video %}
+                                <a class="col-md-4 col-sm-6 video" href="{{ i.video }}"
+                                   data-poster="https://img.youtube.com/vi/{{ i.video_image }}/sddefault.jpg">
+                                    <div class="cover">
+                                        <img src="https://img.youtube.com/vi/{{ i.video_image }}/sddefault.jpg">
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+
+
+                    </div>
+                    {#                <nav class="control-page" aria-label="...">#}
+                    {#                    <ul class="pagination pagination-sm pull-right">#}
+                    {#                        <li class="disabled prev"><a href="#" aria-label="Previous"></a></li>#}
+                    {#                        <li class="active"><a href="#">1 </a></li>#}
+                    {#                        <li class=""><a href="#">2 </a></li>#}
+                    {#                        <li class=""><a href="#">3 </a></li>#}
+                    {#                        <li class=""><a href="#">... </a></li>#}
+                    {#                        <li class=""><a href="#">7 </a></li>#}
+                    {#                        <li class="next"><a href="#" aria-label="Next"></a></li>#}
+                    {#                    </ul>#}
+                    {#                </nav>#}
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+

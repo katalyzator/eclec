@@ -1,0 +1,28 @@
+.col-md-12 {
+    margin: 0 0 15px 0;
+}
+
+.col-md-12 .cat {
+    text-align: center;
+}
+
+.cat ul {
+    text-align: center; margin: 0 0 0 40%;
+}
+
+.cat ul li {
+    float: left; padding-left: 28px; font-weight: 900; text-transform: uppercase;
+}
+
+.cat ul li a {
+    color: #777;
+}
+
+.cat ul li:hover a {
+    text-decoration: underline!important;
+}
+
+.cat ul li.active a {
+    text-decoration: none!important;
+    color: #2e43c2;
+}

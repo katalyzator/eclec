@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+    <section class="vacancy" id="vacancy">
+
+        <div class="container">
+            <div class="row">
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <h2{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                {{ message }}
+                            </h2>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="line">
+
+                    <h3>Вакансии для специалистов</h3>
+                </div>
+                {% for vac in vacancies %}
+                    <div class="item">
+                        <div class="content">
+
+                            <div class="title">
+
+                                <h2>
+                                    <a href="{% url 'vacancy_detail' id=vac.id %}">{{ vac.title }}</a>
+                                </h2>
+                            </div>
+                            <span class="cost">{{ vac.salary }}</span>
+                            <p>{{ vac.short_description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+

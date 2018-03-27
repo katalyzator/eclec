@@ -1,0 +1,399 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <section class="slider" id="main">
+        <div class="container">
+            <div class="row">
+                <div class="owl-carousel">
+                    {% for i in main_slide %}
+                        <div class="item" style="">
+                            <img src="{{ i.image.url }}" alt="">
+                            <div class="col-md-7">
+
+                                {#                                <h2>{{ i.title }}</h2>#}
+                                {#                                <p>{{ i.text }}</p>#}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div> <!-- end owl-carousel-->
+            </div>
+        </div>
+    </section>
+
+    <section class="our-services" id="our-services">
+        <div class="container">
+            <div class="row">
+                <div class="line">
+                    <h3>наши услуги</h3>
+                </div>
+                <div class="tabs">
+                    <!-- Nav tabs -->
+                    <div class="col-md-3">
+                        <ul class=" nav nav-pills nav-stacked" role="tablist">
+                            {% for i in category %}
+                                <li role="presentation" {% if forloop.first %}class="active"{% endif %}><a
+                                        href="#tab-{{ i.id }}" aria-controls="tab-{{ i.id }}" role="tab"
+                                        data-toggle="tab">{{ i.title }}</a></li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                    <div class="col-md-9">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            {% for i in category %}
+                                <div role="tabpanel" class="tab-pane fade in {% if forloop.first %}active{% endif %}"
+                                     id="tab-{{ i.id }}">
+                                    <div class="clearfix"></div>
+                                    {% for j in service %}
+                                        {% if j.category_id == i.id %}
+                                            <div class="col-md-3 model-trigger" data-toggle="modal"
+                                                 data-target="#modal-1" data-url="{% url 'get_service' id=j.id %}">
+                                                <div class="cover"
+                                                     style="background:  url({{ j.bg_image.url }}) 0 0 no-repeat;">
+                                                    <div class="flag">
+                                                        <img src="{{ j.image.url }}" alt="">
+                                                    </div>
+                                                    <div class="title">
+                                                        <h4 style="margin-top: 15px;">{{ j.name }}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="clearfix"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>  <!--end tabs-->
+            </div>
+        </div>
+    </section>
+
+    <section class="news-revius" id="news-revius">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 left-side">
+                    <h6>Последние новости <a href="{% url 'news' %}">Показать все</a></h6>
+                    {% for i in last_news %}
+                        {% if i.image %}
+                            <div class="col-md-6 col-sm-6">
+                                <a href="{% url 'get_news' pk=i.id %}"></a>
+                                <div class="cover" style="background:   url(
+                                        {% if i.image %}{{ i.image.url }}{% endif %} ) 0 0 no-repeat;">
+                                    <div class="title">
+                                        <h2>{{ i.title }}</h2>
+                                        <span>{{ i.date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-6 col-sm-6 no-image">
+                                <a href="{% url 'get_news' pk=i.id %}"></a>
+                                <div class="cover" style="background:   url(
+                                        {% if i.image %}{{ i.image.url }}{% endif %} ) 0 0 no-repeat;">
+                                    <div class="title">
+                                        <h2>{{ i.title }}</h2>
+                                        <span>{{ i.date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div> <!--end left-side-->
+
+                <div class="col-md-6 right-side">
+                    <h6>Последние отзывы</h6>
+                    {% for i in last_reviews %}
+                        <div class="col-md-12">
+                            <div class="cover">
+                                <div class="title">
+                                    <h5>{{ i.name }}<span class="pull-right">{{ i.date }}</span></h5>
+                                    <p>{{ i.text }}</p>
+                                    <a href="">{{ i.service.category.title }}</a>
+                                    <a href="#" class="model-trigger"
+                                       data-toggle="modal"
+                                       data-url="{% url 'get_service' id=i.service.id %}"
+                                       data-target="#modal-1">{{ i.service.name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>  <!--end right-side-->
+            </div>
+        </div>
+    </section>
+
+    <section class="slider">
+        <div class="container">
+            <div class="row">
+                <div class="owl-carousel">
+                    {% for i in foreing %}
+                        {% if i.image %}
+                        <div class="item" style="">
+                            <img src="{{ i.image.url }}" alt="">
+{#                            <div class="col-md-7">#}
+{##}
+                                {#                                <h2>{{ i.title }}</h2>#}
+                                {#                                <p>{{ i.text }}</p>#}
+{#                            </div>#}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div> <!-- end owl-carousel-->
+            </div>
+        </div>
+    </section>
+
+{#    <section class="slider" id="main">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="owl-carousel">#}
+{#                    {% for i in foreing %}#}
+{#                        {% if i.image %}#}
+{#                            <div class="item" style="background:  url({{ i.image.url }}) 0 0 no-repeat;">#}
+{#                        {% endif %}#}
+{#                    <div class="col-md-7">#}
+{#                        <h2>{{ i.title }}</h2>#}
+{#                        <p>{{ i.text }}</p>#}
+{#                    </div>#}
+{#                    </div>#}
+{#                    {% endfor %}#}
+{#                </div> <!-- end owl-carousel-->#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+
+    <section class="about-us" id="about-">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="cover">
+                        <h4>О нас</h4>
+                        <h5>{{ about_us.title }}</h5>
+                        {{ about_us.text|safe }}
+                    </div>
+
+                </div>
+
+                <div class="col-md-offset-1 col-md-5">
+                    <div class="cover">
+                        <div class="owl-carousel about-us">
+                            {% if about_us.image1 %}
+                                <div class="item">
+                                    <img src="{{ about_us.image1.url }}" alt="">
+                                </div>
+                            {% endif %}
+                            {% if about_us.image2 %}
+                                <div class="item">
+                                    <img src="{{ about_us.image2.url }}" alt="">
+                                </div>
+                            {% endif %}
+                            {% if about_us.image3 %}
+                                <div class="item">
+                                    <img src="{{ about_us.image3.url }}" alt="">
+                                </div>
+                            {% endif %}
+                        </div> <!-- end owl-carousel-->
+                        <a href="{% url 'gallery' %}">Перейти в галерею</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="partners">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="cover">
+                        <h5>{{ about_us.partner_title }}</h5>
+                        <p>{{ about_us.partner_text }}</p>
+                    </div>
+                </div>
+                <div class="col-md-offset-1 col-md-6">
+                    <div class="owl-carousel partners-owl">
+                        {% for i in part_slide %}
+                            <div class="item">
+                                <img src="{{ i.image.url }}" alt="">
+                            </div>
+                        {% endfor %}
+                    </div> <!-- end owl-carousel-->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="maps">
+        <div class="container">
+            <div class="row">
+                <div class="cover" style="z-index: 9999">
+                    <ul>
+                        <li>
+                            <span class="pull-left">Режим работы</span>
+                            <span class="pull-right">{{ contacts.time }}</span>
+                        </li>
+                        <li>
+                            <span class="pull-left">E-mail:</span>
+                            <span class="pull-right">{{ contacts.email }}</span>
+                        </li>
+                        <li>
+                            <span class="pull-left">Телефон: </span>
+                            <a class="pull-right" href="tel:{{ contacts.phone }}">{{ contacts.phone }}</a>
+
+                        </li>
+                        <li>
+                            <span class="pull-left">Адрес:</span>
+                            <span class="pull-right">{{ contacts.address }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="maps" style="width: 100%; height: auto; min-height: 450px;">
+                    <div id="googleMap" style="width: 100%; height: auto; min-height: 450px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block modal %}
+
+    <div class="modal fade bs-example-modal-lg" id="modal-1" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">Закрыть</button>
+                </div>
+                <div class="modal-body" id="ajax-modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block custom_scripts %}
+    <script>
+        function initReviewsCarousel() {
+            if ($('.owl-carousel').length > 0)
+                $('.owl-carousel.modal-carousel').owlCarousel({
+                    loop: false,
+                    margin: 100,
+                    item: 2,
+                    dots: true,
+                    nav: true,
+                    autoplay: true,
+                    autoplayTimeout: 2000,
+                    smartSpeed: 1200,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 1
+                        },
+                        1000: {
+                            items: 2
+                        }
+
+                    }
+                });
+        }
+        $(document).ready(function () {
+            var trigger = $('.model-trigger');
+
+            $(trigger).each(function (i, obj) {
+                $(obj).on('click', function (event) {
+                    var link = $(this).attr('data-url');
+                    $.ajax({
+                        method: 'GET',
+                        dataType: 'HTML',
+                        url: link,
+                        success: function (response) {
+                            $('#ajax-modal-body').html(response);
+                            initReviewsCarousel();
+                            initForm();
+                            $('#application-form').append("{% csrf_token %}");
+                            $('#review-form').append("{% csrf_token %}");
+                        },
+                        error: function () {
+
+                        }
+                    });
+                });
+            });
+
+            function initForm() {
+                $('#application-form').on('submit', function (event) {
+                    event.preventDefault();
+                    var that = this;
+                    $(that).addClass('hidden');
+                    var loadingEffect = $('#loading-effect');
+                    var successAppl = $('#appl-success');
+                    $(loadingEffect).removeClass('hidden');
+                    $.ajax({
+                        method: 'POST',
+                        dataType: 'JSON',
+                        data: $(that).serialize(),
+                        url: $(that).attr('action'),
+                        success: function (response) {
+                            $(loadingEffect).addClass('hidden');
+                            if (response.success) {
+                                $(successAppl).removeClass('hidden');
+                            } else {
+                                $(that).removeClass('hidden');
+                            }
+                        },
+                        error: function () {
+                            $(loadingEffect).addClass('hidden');
+                            $(that).removeClass('hidden');
+                        }
+                    });
+                });
+
+                $('#review-form').on('submit', function (event) {
+                    event.preventDefault();
+                    var that = this;
+                    $(that).addClass('hidden');
+                    var loadingEffect = $('#load-effect');
+                    var successReview = $('#success-review');
+                    $(loadingEffect).removeClass('hidden');
+                    $.ajax({
+                        method: 'POST',
+                        dataType: 'JSON',
+                        data: $(that).serialize(),
+                        url: $(that).attr('action'),
+                        success: function (response) {
+                            $(loadingEffect).addClass('hidden');
+                            if (response.success) {
+                                $(successReview).removeClass('hidden');
+                            } else {
+                                $(that).removeClass('hidden');
+                            }
+                        },
+                        error: function () {
+                            $(loadingEffect).addClass('hidden');
+                            $(that).removeClass('hidden');
+                        }
+
+                    });
+                });
+            }
+
+
+        });
+    </script>
+{% endblock %}

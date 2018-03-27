@@ -1,0 +1,104 @@
+{% load date_template_helper %}
+{% load staticfiles %}
+<div class="cover">
+    <div class="col-md-8">
+        <h2>{{ item.title }}</h2>
+        {{ item.text|safe }}
+        <ul>
+            <li>
+                <b>Размер группы:</b>
+                <span>{{ item.group_size }}</span>
+            </li>
+            <li>
+                <b>Длительность:</b>
+                <span>{{ item.duration }}</span></li>
+            <li>
+                <b>Занятия:</b>
+                <span>{{ item.time }}</span></li>
+            <li>
+                <b>Возраст:</b>
+                <span>{{ item.age }}</span></li>
+            <li>
+                <b>Стоимость:</b>
+                <span>{{ item.cost }}</span></li>
+        </ul>
+
+        <!--<button type="button" data-toggle="collapse"-->
+        <!--data-target="#collapseExample" aria-expanded="false"-->
+        <!--aria-controls="collapseExample">-->
+        <!--Записаться-->
+        <!--</button>-->
+        <div class="form col-md-8">
+            <form  method="POST" action="{% url 'application' course_id=item.id %}" id="application-form">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Ваше имя" name="name" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="Ваш телефон" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Ваша почта" name="email" required>
+                </div>
+                <button type="submit" class="">Записаться</button>
+            </form>
+            <div class="loading hidden" id="loading-effect">
+                <img src="{% static 'img/loading.gif' %}" alt="">
+            </div>
+            <div class="success hidden" id="appl-success">
+                <div class="img-wrapper">
+                    <img src="{% static 'img/video-play.png' %}" alt="">
+                </div>
+                <h6>Заявка отправлена</h6>
+                <p>Вы успешно отправили данные, скоро наш менеджер свяжется с вами!</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="cover" style="background:  url({{ item.bg_image.url }}) 0 0 no-repeat;">
+            <div class="flag">
+                <img src="{{ item.image.url }}" alt="">
+            </div>
+            <div class="title">
+                <h4>{{ item.name }}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cover">
+    <div class="line">
+        <h3>Отзывы <span>({{ reviews_count }})</span></h3>
+    </div>
+    <div class="owl-carousel modal-carousel">
+            {% for comment in reviews %}
+            <div class="item">
+                <h4>{{ comment.name }} <span class="pull-right">{{ comment.date|date:'d-m-y'|reformat_date }}</span></h4>
+                <p>{{ comment.text }}</p>
+            </div>
+            {% endfor %}
+    </div> <!-- end owl-carousel-->
+    <div class="col-md-offset-3 col-md-6">
+        <div class="form">
+            <form method="POST" action="{% url 'review' course_id=item.id %}" id="review-form">
+                <label>Оставить отзыв</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Ваше имя" required>
+                </div>
+                <div class="form-group">
+                    <textarea type="text" rows="3" class="form-control" name="text" placeholder="Напишите свой отзыв сюда ..." required></textarea>
+                </div>
+                <button type="submit" class="">Отправить</button>
+            </form>
+        </div>
+        <div class="loading hidden" id="load-effect">
+            <img src="{% static 'img/loading.gif' %}" alt="">
+        </div>
+        <div class="success hidden" id="success-review">
+            <div class="img-wrapper">
+                <img src="{% static 'img/video-play.png' %}" alt="">
+            </div>
+            <h6>отзыв добавлен</h6>
+            <p>Ваш отзыв успешно добавлен! Он появится после проверки модератором</p>
+        </div>
+    </div>
+</div>
