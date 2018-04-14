@@ -56,9 +56,11 @@
                     <li class="{% if location == 'index' %}active{% endif %}"><a href="/">Главная</a></li>
                     <li><a href="/#our-services">Услуги</a></li>
                     <li><a href="/#about-">О нас</a></li>
-                    <li class="{% if location == 'vacancy' %}active{% endif %}"><a href="{% url 'vacancy' %}">Вакансии</a></li>
+                    <li class="{% if location == 'vacancy' %}active{% endif %}"><a
+                            href="{% url 'vacancy' %}">Вакансии</a></li>
                     <li class="{% if location == 'news' %}active{% endif %}"><a href="{% url 'news' %}">Новости</a></li>
-                    <li class="{% if location == 'gallery' %}active{% endif %}"><a href="{% url 'gallery' %}">Галерея</a></li>
+                    <li class="{% if location == 'gallery' %}active{% endif %}"><a
+                            href="{% url 'gallery' %}">Галерея</a></li>
                     <li><a href="/#footer">Контакты</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -70,10 +72,10 @@
 {% block content %}
 {% endblock %}
 
-<div class="mobile-icon">
-    <a href="https://api.whatsapp.com/send?phone=0555386666">
-        <i class="fa fa-whatsapp" aria-hidden="true"></i>
-    </a>
+<div class="phone-mobile-click">
+    <a class="phone-btn" href="tel: +996555386666"><i class="fa fa-phone"></i></a>
+    <a class="whats-btn" href="https://api.whatsapp.com/send?phone=+996555386666"><i
+            class="fa fa-whatsapp fa-x2"></i></a>
 </div>
 <footer id="footer">
     <div class="container">
@@ -139,49 +141,55 @@
 <script type="text/javascript" src="{% static 'js/common.js' %}"></script>
 
 
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap"></script>
+<script>
+    var map = null;
+    var markers = [
+        {
+            lat: parseFloat('{{ contacts.location.latitude }}'.replace(',', '.')),
+            lng: parseFloat('{{ contacts.location.longitude }}'.replace(',', '.'))
+        }
+    ];
+    function initMap() {
+        var haightAshbury = {
+            lat: parseFloat('{{ contacts.location.latitude }}'.replace(',', '.')),
+            lng: parseFloat('{{ contacts.location.longitude }}'.replace(',', '.'))
+        };
+        map = new google.maps.Map(document.getElementById('googleMap'), {
+            center: haightAshbury,
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+        for (var i = 0; i < markers.length; i++) {
+            addMarker(markers[i]);
+        }
+    }
+    function addMarker(location) {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(location.lat, location.lng),
+            map: map
+        });
+    }
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEuBW9AIFcfHx1UHvceIvCz0JnRNjGyo&callback=initMap"></script>
-   <script>
-       var map = null;
-       var markers = [
-           {lat: parseFloat('{{ contacts.location.latitude }}'.replace(',', '.')), lng: parseFloat('{{ contacts.location.longitude }}'.replace(',', '.'))}
-       ];
-       function initMap() {
-           var haightAshbury = {lat: parseFloat('{{ contacts.location.latitude }}'.replace(',', '.')), lng: parseFloat('{{ contacts.location.longitude }}'.replace(',', '.'))};
-           map = new google.maps.Map(document.getElementById('googleMap'), {
-               center: haightAshbury,
-               zoom: 14,
-               mapTypeId: google.maps.MapTypeId.TERRAIN
-           });
-           for(var i = 0; i < markers.length; i++) {
-               addMarker(markers[i]);
-           }
-       }
-       function addMarker(location) {
-           var marker = new google.maps.Marker({
-               position: new google.maps.LatLng(location.lat,location.lng),
-               map: map
-           });
-       }
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
 
-       // Sets the map on all markers in the array.
-       function setMapOnAll(map) {
-           for (var i = 0; i < markers.length; i++) {
-               markers[i].setMap(map);
-           }
-       }
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
 
-       // Removes the markers from the map, but keeps them in the array.
-       function clearMarkers() {
-           setMapOnAll(null);
-       }
+    // Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
 
-       // Shows any markers currently in the array.
-       function showMarkers() {
-           setMapOnAll(map);
-       }
-
-   </script>
+</script>
 <script>
     $(document).ready(function () {
         $('.see-more').on('click', function (e) {
@@ -192,7 +200,7 @@
             var page = $(that).attr('data-page');
             page++;
 
-            if(parseInt(page) <= parseInt($(that).attr('data-page-count'))) {
+            if (parseInt(page) <= parseInt($(that).attr('data-page-count'))) {
                 $.ajax({
                     url: $(that).attr('href') + '?page=' + page,
                     method: 'GET',
@@ -213,8 +221,30 @@
 
 <!-- BEGIN JIVOSITE CODE {literal} -->
 <script type='text/javascript'>
-(function(){ var widget_id = 'fFWssCFqtl';var d=document;var w=window;function l(){
-var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+    (function () {
+        var widget_id = 'fFWssCFqtl';
+        var d = document;
+        var w = window;
+
+        function l() {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = '//code.jivosite.com/script/widget/' + widget_id;
+            var ss = document.getElementsByTagName('script')[0];
+            ss.parentNode.insertBefore(s, ss);
+        }
+
+        if (d.readyState == 'complete') {
+            l();
+        } else {
+            if (w.attachEvent) {
+                w.attachEvent('onload', l);
+            } else {
+                w.addEventListener('load', l, false);
+            }
+        }
+    })();</script>
 <!-- {/literal} END JIVOSITE CODE -->
 {% block custom_scripts %}
 

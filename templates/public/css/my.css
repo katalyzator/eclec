@@ -7,11 +7,15 @@
 }
 
 .cat ul {
-    text-align: center; margin: 0 0 0 40%;
+    text-align: center;
+    margin: 0 0 0 40%;
 }
 
 .cat ul li {
-    float: left; padding-left: 28px; font-weight: 900; text-transform: uppercase;
+    float: left;
+    padding-left: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
 .cat ul li a {
@@ -19,33 +23,47 @@
 }
 
 .cat ul li:hover a {
-    text-decoration: underline!important;
+    text-decoration: underline !important;
 }
 
 .cat ul li.active a {
-    text-decoration: none!important;
+    text-decoration: none !important;
     color: #2e43c2;
 }
-.mobile-icon{
+
+.phone-mobile-click{
     position: fixed;
-    bottom: 50px;
-    left: 20px;
-    font-size: 43px;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+    bottom: 2%;
+    left: 5%;
     display: none;
-    z-index: 100;
 }
-.mobile-icon a i {
-    color: #0dc143;
+.phone-mobile-click a {
+    background: #000;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-decoration: none;
+    animation: pulse_5982 2s linear infinite;
+    transform-origin: 50% 50%;
 }
-.mobile-icon a{
-    display: inline-block;
-    height: 40px;
+.phone-mobile-click i {
+    font-size: 25px;
 }
+.phone-mobile-click  a.phone-btn{
+    background-color: rgba(20, 45, 105, 1);
+    color: #fff;
+}
+.phone-mobile-click a.whats-btn{
+    color: #80e878;
+    background-color: #29ab96;
+}
+
 @media (min-width: 320px) and (max-width: 991px) {
-    .mobile-icon{
+    .phone-mobile-click {
         display: inline-block;
     }
 }
