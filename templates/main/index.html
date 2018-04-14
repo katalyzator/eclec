@@ -111,19 +111,21 @@
                 <div class="col-md-6 right-side">
                     <h6>Последние отзывы</h6>
                     {% for i in last_reviews %}
-                        <div class="col-md-12">
-                            <div class="cover">
-                                <div class="title">
-                                    <h5>{{ i.name }}<span class="pull-right">{{ i.date }}</span></h5>
-                                    <p>{{ i.text }}</p>
-                                    <a href="">{{ i.service.category.title }}</a>
-                                    <a href="#" class="model-trigger"
-                                       data-toggle="modal"
-                                       data-url="{% url 'get_service' id=i.service.id %}"
-                                       data-target="#modal-1">{{ i.service.name }}</a>
+                        {% if i.is_active %}
+                            <div class="col-md-12">
+                                <div class="cover">
+                                    <div class="title">
+                                        <h5>{{ i.name }}<span class="pull-right">{{ i.date }}</span></h5>
+                                        <p>{{ i.text }}</p>
+                                        <a href="">{{ i.service.category.title }}</a>
+                                        <a href="#" class="model-trigger"
+                                           data-toggle="modal"
+                                           data-url="{% url 'get_service' id=i.service.id %}"
+                                           data-target="#modal-1">{{ i.service.name }}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>  <!--end right-side-->
             </div>
@@ -136,14 +138,14 @@
                 <div class="owl-carousel">
                     {% for i in foreing %}
                         {% if i.image %}
-                        <div class="item" style="">
-                            <img src="{{ i.image.url }}" alt="">
-{#                            <div class="col-md-7">#}
-{##}
+                            <div class="item" style="">
+                                <img src="{{ i.image.url }}" alt="">
+                                {#                            <div class="col-md-7">#}
+                                {##}
                                 {#                                <h2>{{ i.title }}</h2>#}
                                 {#                                <p>{{ i.text }}</p>#}
-{#                            </div>#}
-                        </div>
+                                {#                            </div>#}
+                            </div>
                         {% endif %}
                     {% endfor %}
                 </div> <!-- end owl-carousel-->
@@ -151,24 +153,24 @@
         </div>
     </section>
 
-{#    <section class="slider" id="main">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="owl-carousel">#}
-{#                    {% for i in foreing %}#}
-{#                        {% if i.image %}#}
-{#                            <div class="item" style="background:  url({{ i.image.url }}) 0 0 no-repeat;">#}
-{#                        {% endif %}#}
-{#                    <div class="col-md-7">#}
-{#                        <h2>{{ i.title }}</h2>#}
-{#                        <p>{{ i.text }}</p>#}
-{#                    </div>#}
-{#                    </div>#}
-{#                    {% endfor %}#}
-{#                </div> <!-- end owl-carousel-->#}
-{#            </div>#}
-{#        </div>#}
-{#    </section>#}
+    {#    <section class="slider" id="main">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="owl-carousel">#}
+    {#                    {% for i in foreing %}#}
+    {#                        {% if i.image %}#}
+    {#                            <div class="item" style="background:  url({{ i.image.url }}) 0 0 no-repeat;">#}
+    {#                        {% endif %}#}
+    {#                    <div class="col-md-7">#}
+    {#                        <h2>{{ i.title }}</h2>#}
+    {#                        <p>{{ i.text }}</p>#}
+    {#                    </div>#}
+    {#                    </div>#}
+    {#                    {% endfor %}#}
+    {#                </div> <!-- end owl-carousel-->#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </section>#}
 
     <section class="about-us" id="about-">
         <div class="container">
