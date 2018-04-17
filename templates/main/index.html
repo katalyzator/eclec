@@ -379,12 +379,7 @@
                         data: $(that).serialize(),
                         url: $(that).attr('action'),
                         success: function (response) {
-                            $(loadingEffect).addClass('hidden');
-                            if (response.success) {
-                                $(successReview).removeClass('hidden');
-                            } else {
-                                $(that).removeClass('hidden');
-                            }
+                            alert("Успешно отправлено! Спасибо за отзыв!")
                         },
                         error: function () {
                             $(loadingEffect).addClass('hidden');
