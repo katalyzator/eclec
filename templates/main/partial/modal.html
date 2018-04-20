@@ -29,7 +29,7 @@
         <!--Записаться-->
         <!--</button>-->
         <div class="form col-md-8">
-            <form  method="POST" action="{% url 'application' course_id=item.id %}" id="application-form">
+            <form method="POST" action="{% url 'application' course_id=item.id %}" id="application-form">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Ваше имя" name="name" required>
                 </div>
@@ -70,12 +70,15 @@
         <h3>Отзывы <span>({{ reviews_count }})</span></h3>
     </div>
     <div class="owl-carousel modal-carousel">
-            {% for comment in reviews %}
-            <div class="item">
-                <h4>{{ comment.name }} <span class="pull-right">{{ comment.date|date:'d-m-y'|reformat_date }}</span></h4>
-                <p>{{ comment.text }}</p>
-            </div>
-            {% endfor %}
+        {% for comment in reviews %}
+            {% if comment.is_active %}
+                <div class="item">
+                    <h4>{{ comment.name }} <span class="pull-right">{{ comment.date|date:'d-m-y'|reformat_date }}</span>
+                    </h4>
+                    <p>{{ comment.text }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div> <!-- end owl-carousel-->
     <div class="col-md-offset-3 col-md-6">
         <div class="form">
@@ -85,7 +88,8 @@
                     <input type="text" class="form-control" name="name" placeholder="Ваше имя" required>
                 </div>
                 <div class="form-group">
-                    <textarea type="text" rows="3" class="form-control" name="text" placeholder="Напишите свой отзыв сюда ..." required></textarea>
+                    <textarea type="text" rows="3" class="form-control" name="text"
+                              placeholder="Напишите свой отзыв сюда ..." required></textarea>
                 </div>
                 <button type="submit" class="">Отправить</button>
             </form>
