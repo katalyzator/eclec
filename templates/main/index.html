@@ -382,6 +382,7 @@
                             $(loadingEffect).addClass('hidden');
                             if (response.success) {
                                 successReview.removeClass('hidden');
+                                $('#modal-1').modal('toggle');
                             } else {
                                 $(that).removeClass('hidden');
                             }
